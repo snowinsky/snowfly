@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.snowfly.lock.demo.mapper.TVendorTrxBatchDao">
+  <resultMap id="BaseResultMap" type="com.snowfly.lock.demo.model.TVendorTrxBatch">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="TRANS_TYPE" jdbcType="DECIMAL" property="transType" />
+    <result column="CHANNEL_CODE" jdbcType="VARCHAR" property="channelCode" />
+    <result column="BATCH_NAME" jdbcType="VARCHAR" property="batchName" />
+    <result column="REQUEST_TOTAL_NUM" jdbcType="DECIMAL" property="requestTotalNum" />
+    <result column="ACTUAL_TOTAL_NUM" jdbcType="DECIMAL" property="actualTotalNum" />
+    <result column="PROCESS_STATUS" jdbcType="DECIMAL" property="processStatus" />
+    <result column="CDATE" jdbcType="TIMESTAMP" property="cdate" />
+    <result column="EDATE" jdbcType="TIMESTAMP" property="edate" />
+    <result column="CREATOR" jdbcType="VARCHAR" property="creator" />
+    <result column="EDITOR" jdbcType="VARCHAR" property="editor" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, TRANS_TYPE, CHANNEL_CODE, BATCH_NAME, REQUEST_TOTAL_NUM, ACTUAL_TOTAL_NUM, PROCESS_STATUS, 
+    CDATE, EDATE, CREATOR, EDITOR, "STATUS"
+  </sql>
+  <select id="selectByExample" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatchExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_VENDOR_TRX_BATCH
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_VENDOR_TRX_BATCH
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from T_VENDOR_TRX_BATCH
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatchExample">
+    delete from T_VENDOR_TRX_BATCH
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="ID" keyProperty="id" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatch" useGeneratedKeys="true">
+    insert into T_VENDOR_TRX_BATCH (ID, TRANS_TYPE, CHANNEL_CODE, BATCH_NAME,
+      REQUEST_TOTAL_NUM, ACTUAL_TOTAL_NUM, PROCESS_STATUS, 
+      CDATE, EDATE, CREATOR, 
+      EDITOR, "STATUS")
+    values (#{id,jdbcType=DECIMAL}, #{transType,jdbcType=DECIMAL}, #{channelCode,jdbcType=VARCHAR}, #{batchName,jdbcType=VARCHAR},
+      #{requestTotalNum,jdbcType=DECIMAL}, #{actualTotalNum,jdbcType=DECIMAL}, #{processStatus,jdbcType=DECIMAL}, 
+      #{cdate,jdbcType=TIMESTAMP}, #{edate,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{editor,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatch" useGeneratedKeys="true">
+    insert into T_VENDOR_TRX_BATCH
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transType != null">
+        TRANS_TYPE,
+      </if>
+      <if test="channelCode != null">
+        CHANNEL_CODE,
+      </if>
+      <if test="batchName != null">
+        BATCH_NAME,
+      </if>
+      <if test="requestTotalNum != null">
+        REQUEST_TOTAL_NUM,
+      </if>
+      <if test="actualTotalNum != null">
+        ACTUAL_TOTAL_NUM,
+      </if>
+      <if test="processStatus != null">
+        PROCESS_STATUS,
+      </if>
+      <if test="cdate != null">
+        CDATE,
+      </if>
+      <if test="edate != null">
+        EDATE,
+      </if>
+      <if test="creator != null">
+        CREATOR,
+      </if>
+      <if test="editor != null">
+        EDITOR,
+      </if>
+      <if test="status != null">
+        "STATUS",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transType != null">
+        #{transType,jdbcType=DECIMAL},
+      </if>
+      <if test="channelCode != null">
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchName != null">
+        #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTotalNum != null">
+        #{requestTotalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalNum != null">
+        #{actualTotalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="processStatus != null">
+        #{processStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="cdate != null">
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="edate != null">
+        #{edate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatchExample" resultType="java.lang.Long">
+    select count(*) from T_VENDOR_TRX_BATCH
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update T_VENDOR_TRX_BATCH
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.transType != null">
+        TRANS_TYPE = #{record.transType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.channelCode != null">
+        CHANNEL_CODE = #{record.channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchName != null">
+        BATCH_NAME = #{record.batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestTotalNum != null">
+        REQUEST_TOTAL_NUM = #{record.requestTotalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.actualTotalNum != null">
+        ACTUAL_TOTAL_NUM = #{record.actualTotalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.processStatus != null">
+        PROCESS_STATUS = #{record.processStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cdate != null">
+        CDATE = #{record.cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.edate != null">
+        EDATE = #{record.edate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null">
+        CREATOR = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editor != null">
+        EDITOR = #{record.editor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        "STATUS" = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update T_VENDOR_TRX_BATCH
+    set ID = #{record.id,jdbcType=DECIMAL},
+      TRANS_TYPE = #{record.transType,jdbcType=DECIMAL},
+      CHANNEL_CODE = #{record.channelCode,jdbcType=VARCHAR},
+      BATCH_NAME = #{record.batchName,jdbcType=VARCHAR},
+      REQUEST_TOTAL_NUM = #{record.requestTotalNum,jdbcType=DECIMAL},
+      ACTUAL_TOTAL_NUM = #{record.actualTotalNum,jdbcType=DECIMAL},
+      PROCESS_STATUS = #{record.processStatus,jdbcType=DECIMAL},
+      CDATE = #{record.cdate,jdbcType=TIMESTAMP},
+      EDATE = #{record.edate,jdbcType=TIMESTAMP},
+      CREATOR = #{record.creator,jdbcType=VARCHAR},
+      EDITOR = #{record.editor,jdbcType=VARCHAR},
+      "STATUS" = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatch">
+    update T_VENDOR_TRX_BATCH
+    <set>
+      <if test="transType != null">
+        TRANS_TYPE = #{transType,jdbcType=DECIMAL},
+      </if>
+      <if test="channelCode != null">
+        CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="batchName != null">
+        BATCH_NAME = #{batchName,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTotalNum != null">
+        REQUEST_TOTAL_NUM = #{requestTotalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="actualTotalNum != null">
+        ACTUAL_TOTAL_NUM = #{actualTotalNum,jdbcType=DECIMAL},
+      </if>
+      <if test="processStatus != null">
+        PROCESS_STATUS = #{processStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="cdate != null">
+        CDATE = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="edate != null">
+        EDATE = #{edate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        CREATOR = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null">
+        EDITOR = #{editor,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        "STATUS" = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.snowfly.lock.demo.model.TVendorTrxBatch">
+    update T_VENDOR_TRX_BATCH
+    set TRANS_TYPE = #{transType,jdbcType=DECIMAL},
+      CHANNEL_CODE = #{channelCode,jdbcType=VARCHAR},
+      BATCH_NAME = #{batchName,jdbcType=VARCHAR},
+      REQUEST_TOTAL_NUM = #{requestTotalNum,jdbcType=DECIMAL},
+      ACTUAL_TOTAL_NUM = #{actualTotalNum,jdbcType=DECIMAL},
+      PROCESS_STATUS = #{processStatus,jdbcType=DECIMAL},
+      CDATE = #{cdate,jdbcType=TIMESTAMP},
+      EDATE = #{edate,jdbcType=TIMESTAMP},
+      CREATOR = #{creator,jdbcType=VARCHAR},
+      EDITOR = #{editor,jdbcType=VARCHAR},
+      "STATUS" = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateStatusInProcess">
+    update T_VENDOR_TRX_BATCH
+    set PROCESS_STATUS = 31,
+    EDATE = #{timestamp}
+    where BATCH_NAME = #{batchName}
+    and PROCESS_STATUS = 2
+    and edate = #{edate}
+  </update>
+  <update id="updateStatusComplete">
+    update T_VENDOR_TRX_BATCH
+    set PROCESS_STATUS = 3,
+    EDATE = SYSDATE
+    where BATCH_NAME = #{batchName}
+    and PROCESS_STATUS = 31
+    and EDATE = #{timestamp}
+  </update>
+</mapper>
